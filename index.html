@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+    h1 {
+      margin-bottom: 30px;
+    }
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: white;
+    }
+    .insert-button {
+      background-color: #007BFF;
+    }
+    .insert-button:hover {
+      background-color: #0056b3;
+    }
+    .view-button {
+      background-color: #28A745;
+    }
+    .view-button:hover {
+      background-color: #1e7e34;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bienvenue sur le Dashboard</h1>
+  <div class="button-container">
+    <!-- Bouton pour insérer des données -->
+    <button class="insert-button" onclick="location.href='public/register.html'">Insérer des données</button>
+    <!-- Bouton pour voir la liste des données -->
+    <button class="view-button" onclick="location.href='public/login.html'">Voir la liste des données</button>
+  </div>
+</body>
+</html>
