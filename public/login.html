@@ -1,91 +1,150 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Connexion</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 50px;
-    }
-    form {
-      max-width: 300px;
-      margin: auto;
-    }
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
-    input {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    button {
-      padding: 10px 15px;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    .back-button {
-      background-color: #28A745;
-      margin-top: 20px;
-    }
-    .back-button:hover {
-      background-color: #1e7e34;
-    }
-  </style>
-</head>
-<body>
-  <h1>Connexion</h1>
-  <form id="loginForm">
-    <label for="email">Email :</label>
-    <input type="email" id="email" name="email" required>
-
-    <label for="password">Mot de passe :</label>
-    <input type="password" id="password" name="password" required>
-
-    <button type="submit">Se connecter</button>
-  </form>
-  <button class="back-button" onclick="location.href='../index.html'">Retour à la page d'accueil</button>
-
-  <script>
-    const form = document.getElementById('loginForm');
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      const email = form.email.value;
-      const password = form.password.value;
-
-      try {
-        const response = await fetch('/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
-        });
-
-        if (response.ok) {
-          // Redirection vers la liste des utilisateurs après connexion réussie
-          window.location.href = 'users.html';
-        } else {
-          alert('Email ou mot de passe incorrect.');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - LuxBags</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .bg-gradient {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
         }
-      } catch (err) {
-        console.error('Erreur lors de la requête :', err);
-      }
-    });
-  </script>
+        
+        .input-focus:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gray-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="/" class="text-2xl font-bold text-indigo-400">LuxBags</a>
+                <nav>
+                    <ul class="flex space-x-6">
+                        <li><a href="/public/index.html" class="hover:text-indigo-400 transition duration-300">Accueil</a></li>
+                        <li><a href="/public/collections.html" class="hover:text-indigo-400 transition duration-300">Collections</a></li>
+                        <li><a href="/public/contact.html" class="hover:text-indigo-400 transition duration-300">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="max-w-md mx-auto bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+            <div class="p-8">
+                <h2 class="text-2xl font-bold text-white mb-6 text-center">Connexion</h2>
+
+                <form id="loginForm" class="space-y-6">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-400 mb-2">Email</label>
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-400 mb-2">Mot de passe</label>
+                        <input type="password" id="password" name="password" required class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                    </div>
+
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium transition duration-300 transform hover:scale-105">
+                        Se connecter
+                    </button>
+                </form>
+
+                <div class="mt-6 text-center">
+                    <p class="text-gray-400">
+                        Pas encore de compte ?
+                        <a href="/public/register.html" class="text-indigo-400 hover:text-indigo-300 transition duration-300">
+                            S'inscrire
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">À propos</h3>
+                    <p class="text-gray-400">LuxBags - Votre destination pour des sacs de luxe authentiques et élégants.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Liens rapides</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/public/index.html" class="text-gray-400 hover:text-white transition duration-300">Accueil</a></li>
+                        <li><a href="/public/collections.html" class="text-gray-400 hover:text-white transition duration-300">Collections</a></li>
+                        <li><a href="/public/contact.html" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Suivez-nous</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-pinterest-p"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 LuxBags. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async(e) => {
+            e.preventDefault();
+
+            // Récupération des valeurs du formulaire
+            const formData = {
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value
+            };
+
+            try {
+                // Envoi de la requête au serveur
+                const response = await fetch('/users/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Stockage des informations de l'utilisateur dans le localStorage
+                    localStorage.setItem('user', JSON.stringify(data));
+
+                    // Redirection vers la page d'affichage des données
+                    window.location.href = '/public/users.html';
+                } else {
+                    // Afficher le message d'erreur
+                    alert(data.error || 'Email ou mot de passe incorrect.');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Une erreur est survenue lors de la connexion.');
+            }
+        });
+    </script>
 </body>
+
 </html>

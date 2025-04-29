@@ -1,103 +1,211 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modifier un utilisateur</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    form {
-      max-width: 400px;
-      margin: auto;
-    }
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
-    input {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    button {
-      padding: 10px 15px;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    .back-button {
-      background-color: #28A745;
-      margin-top: 20px;
-    }
-    .back-button:hover {
-      background-color: #1e7e34;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier l'utilisateur - LuxBags</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .bg-gradient {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
+        }
+        
+        .input-focus:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+    </style>
 </head>
-<body>
-  <h1>Modifier un utilisateur</h1>
-  <form id="editUserForm">
-    <input type="hidden" id="userId" name="userId">
-    <label for="name">Nom :</label>
-    <input type="text" id="name" name="name" required>
 
-    <label for="email">Email :</label>
-    <input type="email" id="email" name="email" required>
+<body class="bg-gray-900 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gray-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="/public/index.html" class="text-2xl font-bold text-indigo-400">LuxBags</a>
+                <nav>
+                    <ul class="flex space-x-6">
+                        <li><a href="/public/index.html" class="hover:text-indigo-400 transition duration-300">Accueil</a></li>
+                        <li><a href="/public/collections.html" class="hover:text-indigo-400 transition duration-300">Collections</a></li>
+                        <li><a href="/public/contact.html" class="hover:text-indigo-400 transition duration-300">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
 
-    <button type="submit">Modifier</button>
-  </form>
-  <button class="back-button" onclick="location.href='users.html'">Retour à la liste des utilisateurs</button>
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="max-w-md mx-auto bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+            <div class="p-8">
+                <h2 class="text-2xl font-bold text-white mb-6 text-center">Modifier l'utilisateur</h2>
 
-  <script>
-    // Récupération des paramètres de l'URL
-    const params = new URLSearchParams(window.location.search);
-    const userId = params.get('id');
-    const userName = params.get('name');
-    const userEmail = params.get('email');
+                <form id="editUserForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="first_name" class="block text-sm font-medium text-gray-400 mb-2">Prénom</label>
+                            <input type="text" id="first_name" name="first_name" required class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                        </div>
+                        <div>
+                            <label for="last_name" class="block text-sm font-medium text-gray-400 mb-2">Nom</label>
+                            <input type="text" id="last_name" name="last_name" required class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                        </div>
+                    </div>
 
-    // Pré-remplissage du formulaire avec les données de l'utilisateur
-    document.getElementById('userId').value = userId;
-    document.getElementById('name').value = userName;
-    document.getElementById('email').value = userEmail;
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-400 mb-2">Email</label>
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                    </div>
 
-    // Gestion de la soumission du formulaire
-    const form = document.getElementById('editUserForm');
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-400 mb-2">Mot de passe (laisser vide pour ne pas modifier)</label>
+                        <input type="password" id="password" name="password" class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                    </div>
 
-      const updatedName = form.name.value;
-      const updatedEmail = form.email.value;
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-400 mb-2">Téléphone</label>
+                        <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                    </div>
 
-      try {
-        const response = await fetch(`/users/${userId}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ name: updatedName, email: updatedEmail }),
+                    <div>
+                        <label for="address" class="block text-sm font-medium text-gray-400 mb-2">Adresse</label>
+                        <input type="text" id="address" name="address" class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="city" class="block text-sm font-medium text-gray-400 mb-2">Ville</label>
+                            <input type="text" id="city" name="city" class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                        </div>
+                        <div>
+                            <label for="country" class="block text-sm font-medium text-gray-400 mb-2">Pays</label>
+                            <input type="text" id="country" name="country" class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                        </div>
+                    </div>
+
+                    <div class="flex space-x-4">
+                        <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium transition duration-300 transform hover:scale-105">
+                            Mettre à jour
+                        </button>
+                        <a href="/public/users.html" class="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-medium text-center transition duration-300 transform hover:scale-105">
+                            Annuler
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">À propos</h3>
+                    <p class="text-gray-400">LuxBags - Votre destination pour des sacs de luxe authentiques et élégants.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Liens rapides</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/public/index.html" class="text-gray-400 hover:text-white transition duration-300">Accueil</a></li>
+                        <li><a href="/public/collections.html" class="text-gray-400 hover:text-white transition duration-300">Collections</a></li>
+                        <li><a href="/public/contact.html" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Suivez-nous</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-pinterest-p"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 LuxBags. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Récupération de l'ID de l'utilisateur depuis l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('id');
+
+        // Fonction pour charger les données de l'utilisateur
+        async function loadUserData() {
+            try {
+                const response = await fetch(`/users/${userId}`);
+                const user = await response.json();
+
+                // Remplissage du formulaire avec les données de l'utilisateur
+                document.getElementById('first_name').value = user.first_name || '';
+                document.getElementById('last_name').value = user.last_name || '';
+                document.getElementById('email').value = user.email || '';
+                document.getElementById('phone').value = user.phone || '';
+                document.getElementById('address').value = user.address || '';
+                document.getElementById('city').value = user.city || '';
+                document.getElementById('country').value = user.country || '';
+            } catch (error) {
+                console.error('Erreur lors du chargement des données:', error);
+                alert('Une erreur est survenue lors du chargement des données de l\'utilisateur.');
+            }
+        }
+
+        // Gestion de la soumission du formulaire
+        document.getElementById('editUserForm').addEventListener('submit', async(e) => {
+            e.preventDefault();
+
+            // Récupération des valeurs du formulaire
+            const formData = {
+                first_name: document.getElementById('first_name').value,
+                last_name: document.getElementById('last_name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                city: document.getElementById('city').value,
+                country: document.getElementById('country').value
+            };
+
+            // Ajout du mot de passe seulement s'il a été modifié
+            const password = document.getElementById('password').value;
+            if (password) {
+                formData.password = password;
+            }
+
+            try {
+                const response = await fetch(`/users/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    alert('Utilisateur mis à jour avec succès.');
+                    window.location.href = '/public/users.html';
+                } else {
+                    const data = await response.json();
+                    alert(data.error || 'Une erreur est survenue lors de la mise à jour.');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Une erreur est survenue lors de la mise à jour.');
+            }
         });
 
-        if (response.ok) {
-          alert('Utilisateur modifié avec succès.');
-          window.location.href = 'users.html'; // Redirection vers la liste des utilisateurs
-        } else {
-          alert('Erreur lors de la modification de l\'utilisateur.');
-        }
-      } catch (err) {
-        console.error('Erreur lors de la requête :', err);
-      }
-    });
-  </script>
+        // Charger les données de l'utilisateur au chargement de la page
+        document.addEventListener('DOMContentLoaded', loadUserData);
+    </script>
 </body>
+
 </html>
