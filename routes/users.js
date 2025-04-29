@@ -125,9 +125,9 @@ router.get("/:id", async(req, res) => {
 });
 
 // Route PUT pour modifier un utilisateur
-router.put("/:id", async(req, res) => {
+router.put("/:id", uploadProfileImage.single('profile_image'), async(req, res) => {
     const { id } = req.params;
-    const { first_name, last_name, email, phone, address, city, country } = req.body;
+    const { first_name, last_name, email, phone, address, city, country, password } = req.body;
 
     if (!first_name || !last_name || !email) {
         return res.status(400).json({ error: "Les champs prénom, nom et email sont requis." });
@@ -135,23 +135,56 @@ router.put("/:id", async(req, res) => {
 
     try {
         const db = getDB();
-        const result = await db.run(
-            `UPDATE users SET 
-                first_name = ?, 
-                last_name = ?, 
-                email = ?, 
-                phone = ?, 
-                address = ?, 
-                city = ?, 
-                country = ? 
-            WHERE id = ?`, [first_name, last_name, email, phone, address, city, country, id]
-        );
+
+        // Préparation des champs à mettre à jour
+        const updateFields = [
+            'first_name = ?',
+            'last_name = ?',
+            'email = ?',
+            'phone = ?',
+            'address = ?',
+            'city = ?',
+            'country = ?'
+        ];
+        const updateValues = [
+            first_name,
+            last_name,
+            email,
+            phone || null,
+            address || null,
+            city || null,
+            country || null
+        ];
+
+        // Si une nouvelle image a été téléchargée
+        if (req.file) {
+            updateFields.push('profile_image = ?');
+            updateValues.push(req.file.filename);
+        }
+
+        // Si un nouveau mot de passe a été fourni
+        if (password) {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            updateFields.push('password = ?');
+            updateValues.push(hashedPassword);
+        }
+
+        // Ajout de l'ID à la fin des valeurs
+        updateValues.push(id);
+
+        // Construction et exécution de la requête SQL
+        const query = `UPDATE users SET ${updateFields.join(', ')} WHERE id = ?`;
+        const result = await db.run(query, updateValues);
 
         if (result.changes === 0) {
             return res.status(404).json({ error: "Utilisateur non trouvé." });
         }
 
-        res.status(200).json({ message: "Utilisateur modifié avec succès." });
+        res.status(200).json({
+            success: true,
+            message: "Utilisateur modifié avec succès.",
+            profile_image: req.file ? `/uploads/users/${req.file.filename}` : null
+        });
     } catch (err) {
         console.error("Erreur lors de la modification :", err.message);
         res.status(500).json({ error: "Erreur lors de la modification." });
@@ -234,7 +267,7 @@ router.put("/:id/profile-image", uploadProfileImage.single('profile_image'), asy
 
     try {
         const db = getDB();
-        const imagePath = `/uploads/users/${req.file.filename}`;
+        const imagePath = req.file.filename;
 
         const result = await db.run(
             "UPDATE users SET profile_image = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?", [imagePath, id]
@@ -245,8 +278,9 @@ router.put("/:id/profile-image", uploadProfileImage.single('profile_image'), asy
         }
 
         res.status(200).json({
+            success: true,
             message: "Image de profil mise à jour avec succès.",
-            imagePath: imagePath
+            profile_image: imagePath
         });
     } catch (err) {
         console.error("Erreur lors de la mise à jour de l'image de profil :", err.message);
