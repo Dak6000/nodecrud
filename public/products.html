@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produits - LuxBags</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .bg-gradient {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
+        }
+        
+        .input-focus:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 min-h-screen">
+    <header class="bg-gray-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="/" class="text-2xl font-bold text-indigo-400">LuxBags</a>
+                <nav>
+                    <ul class="flex space-x-6">
+                        <li><a href="/" class="hover:text-indigo-400 transition duration-300">Accueil</a></li>
+                        <li><a href="/products.html" class="hover:text-indigo-400 transition duration-300">Produits</a></li>
+                        <li><a href="/users.html" class="hover:text-indigo-400 transition duration-300">Utilisateurs</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-3xl font-bold text-white">Liste des produits</h1>
+                    <a href="/add-product.html" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition duration-300 transform hover:scale-105">
+                        <i class="fas fa-plus mr-2"></i>Ajouter un produit
+                    </a>
+                </div>
+
+                <div class="mb-6 flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <input type="text" id="searchInput" placeholder="Rechercher un produit..." class="pl-10 pr-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                        <select id="categoryFilter" class="px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                            <option value="">Toutes les catégories</option>
+                            <option value="Sacs à main">Sacs à main</option>
+                            <option value="Sacs à dos">Sacs à dos</option>
+                            <option value="Pochettes">Pochettes</option>
+                            <option value="Valises">Valises</option>
+                            <option value="Accessoires">Accessoires</option>
+                        </select>
+                        <select id="sortSelect" class="px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                            <option value="name-asc">Nom (A-Z)</option>
+                            <option value="name-desc">Nom (Z-A)</option>
+                            <option value="price-asc">Prix (Croissant)</option>
+                            <option value="price-desc">Prix (Décroissant)</option>
+                            <option value="stock-asc">Stock (Croissant)</option>
+                            <option value="stock-desc">Stock (Décroissant)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-700">
+                        <thead class="bg-gray-700">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Image</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Nom</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Description</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Prix</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Prix original</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Catégorie</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Badge</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Stock</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Vidéo</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody" class="bg-gray-800 divide-y divide-gray-700">
+                            <!-- Les produits seront insérés ici dynamiquement -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm text-gray-400">Afficher</span>
+                        <select id="itemsPerPage" class="px-2 py-1 rounded bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <span class="text-sm text-gray-400">éléments par page</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm text-gray-400">
+                            Affichage de <span id="startItem">0</span> à <span id="endItem">0</span> sur <span id="totalItems">0</span> éléments
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mt-4 flex justify-center space-x-2" id="paginationNumbers">
+                    <button id="prevPage" class="px-3 py-1 rounded bg-gray-700 text-white hover:bg-gray-600 disabled:opacity-50">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button id="nextPage" class="px-3 py-1 rounded bg-gray-700 text-white hover:bg-gray-600 disabled:opacity-50">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">À propos</h3>
+                    <p class="text-gray-400">LuxBags - Votre destination pour des sacs de luxe authentiques et élégants.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Liens rapides</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-400 hover:text-white transition duration-300">Accueil</a></li>
+                        <li><a href="/products.html" class="text-gray-400 hover:text-white transition duration-300">Produits</a></li>
+                        <li><a href="/users.html" class="text-gray-400 hover:text-white transition duration-300">Utilisateurs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Suivez-nous</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-pinterest-p"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 LuxBags. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentPage = 1;
+        let itemsPerPage = 10;
+        let totalItems = 0;
+        let products = [];
+        let searchTerm = '';
+        let sortBy = 'name';
+        let sortOrder = 'asc';
+        let selectedCategory = '';
+
+        // Fonction pour sauvegarder une image dans le localStorage
+        async function saveImageToLocalStorage(imageUrl, productId) {
+            try {
+                const response = await fetch(imageUrl);
+                const blob = await response.blob();
+                const reader = new FileReader();
+                reader.onload = function() {
+                    localStorage.setItem(`product_image_${productId}`, reader.result);
+                };
+                reader.readAsDataURL(blob);
+            } catch (error) {
+                console.error('Erreur lors de la sauvegarde de l\'image:', error);
+            }
+        }
+
+        // Fonction pour obtenir l'URL de l'image depuis le localStorage ou l'URL d'origine
+        function getImageUrl(imageUrl, productId) {
+            const storedImage = localStorage.getItem(`product_image_${productId}`);
+            if (storedImage) {
+                return storedImage;
+            }
+            if (imageUrl) {
+                saveImageToLocalStorage(imageUrl, productId);
+            }
+            return imageUrl;
+        }
+
+        // Fonction pour charger les produits
+        async function loadProducts() {
+            try {
+                const response = await fetch('/products');
+                const data = await response.json();
+
+                if (response.ok) {
+                    products = data;
+                    totalItems = products.length;
+                    updateTable();
+                } else {
+                    console.error('Erreur lors du chargement des produits:', data.error);
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+            }
+        }
+
+        // Fonction pour mettre à jour le tableau
+        function updateTable() {
+            const tableBody = document.getElementById('productsTableBody');
+            tableBody.innerHTML = '';
+
+            // Filtrer et trier les produits
+            let filteredProducts = products.filter(product =>
+                (product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    product.category.toLowerCase().includes(searchTerm.toLowerCase())) &&
+                (selectedCategory === '' || product.category === selectedCategory)
+            );
+
+            filteredProducts.sort((a, b) => {
+                let comparison = 0;
+                if (sortBy === 'name') {
+                    comparison = a.name.localeCompare(b.name);
+                } else if (sortBy === 'price') {
+                    comparison = a.price - b.price;
+                } else if (sortBy === 'stock') {
+                    comparison = a.stock - b.stock;
+                }
+                return sortOrder === 'asc' ? comparison : -comparison;
+            });
+
+            // Mettre à jour le nombre total d'éléments filtrés
+            totalItems = filteredProducts.length;
+
+            // Calculer les indices de début et de fin
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+
+            // Mettre à jour l'affichage des indices
+            document.getElementById('startItem').textContent = totalItems > 0 ? startIndex + 1 : 0;
+            document.getElementById('endItem').textContent = endIndex;
+            document.getElementById('totalItems').textContent = totalItems;
+
+            // Remplir le tableau avec les produits de la page courante
+            for (let i = startIndex; i < endIndex; i++) {
+                const product = filteredProducts[i];
+                const imageUrl = getImageUrl(product.image_path, product.id);
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-700 transition duration-300';
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        ${imageUrl ? `<img src="${imageUrl}" alt="${product.name}" class="h-10 w-10 rounded-full object-cover">` : '<i class="fas fa-image text-gray-400"></i>'}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-white">${product.name}</td>
+                    <td class="px-6 py-4 text-gray-300">${product.description}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-white">${product.price.toLocaleString()} FCFA</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-white">${product.original_price ? product.original_price.toLocaleString() + ' FCFA' : '-'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-white">${product.category}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        ${product.badge ? `<span class="px-2 py-1 text-xs font-semibold rounded-full ${getBadgeColor(product.badge)}">${product.badge}</span>` : '-'}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-white">${product.stock}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        ${product.video_path ? `
+                            <button onclick="playVideo('${product.video_path}')" class="text-indigo-400 hover:text-indigo-300 transition duration-300">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        ` : '-'}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <a href="/edit-product.html?id=${product.id}" class="text-indigo-400 hover:text-indigo-300 mr-3 transition duration-300">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <button onclick="deleteProduct(${product.id})" class="text-red-400 hover:text-red-300 transition duration-300">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            }
+
+            updatePagination();
+        }
+
+        // Fonction pour obtenir la couleur du badge
+        function getBadgeColor(badge) {
+            switch(badge) {
+                case 'Nouveau':
+                    return 'bg-green-500 text-white';
+                case 'Promotion':
+                    return 'bg-red-500 text-white';
+                case 'Meilleure vente':
+                    return 'bg-yellow-500 text-white';
+                case 'Édition limitée':
+                    return 'bg-purple-500 text-white';
+                default:
+                    return 'bg-gray-500 text-white';
+            }
+        }
+
+        // Fonction pour jouer la vidéo
+        function playVideo(videoPath) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-gray-800 p-4 rounded-lg max-w-4xl w-full mx-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-white text-lg font-semibold">Vidéo du produit</h3>
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" class="text-gray-400 hover:text-white">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <video src="${videoPath}" controls class="w-full rounded-lg"></video>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Fonction pour supprimer un produit
+        async function deleteProduct(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) {
+                try {
+                    const response = await fetch(`/products/${id}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        loadProducts();
+                    } else {
+                        const data = await response.json();
+                        alert(data.error || 'Une erreur est survenue lors de la suppression du produit.');
+                    }
+                } catch (error) {
+                    console.error('Erreur:', error);
+                    alert('Une erreur est survenue lors de la suppression du produit.');
+                }
+            }
+        }
+
+        // Événements
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            currentPage = 1;
+            updateTable();
+        });
+
+        document.getElementById('categoryFilter').addEventListener('change', (e) => {
+            selectedCategory = e.target.value;
+            currentPage = 1;
+            updateTable();
+        });
+
+        document.getElementById('sortSelect').addEventListener('change', (e) => {
+            const [field, order] = e.target.value.split('-');
+            sortBy = field;
+            sortOrder = order;
+            updateTable();
+        });
+
+        document.getElementById('itemsPerPage').addEventListener('change', (e) => {
+            itemsPerPage = parseInt(e.target.value);
+            currentPage = 1;
+            updateTable();
+        });
+
+        // Charger les produits au chargement de la page
+        loadProducts();
+    </script>
+</body>
+
+</html>

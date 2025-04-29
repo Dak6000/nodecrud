@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier un produit - LuxBags</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .bg-gradient {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
+        }
+        
+        .input-focus:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 min-h-screen">
+    <header class="bg-gray-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="/" class="text-2xl font-bold text-indigo-400">LuxBags</a>
+                <nav>
+                    <ul class="flex space-x-6">
+                        <li><a href="/" class="hover:text-indigo-400 transition duration-300">Accueil</a></li>
+                        <li><a href="/products.html" class="hover:text-indigo-400 transition duration-300">Produits</a></li>
+                        <li><a href="/users.html" class="hover:text-indigo-400 transition duration-300">Utilisateurs</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="max-w-6xl mx-auto bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+            <div class="p-8">
+                <h2 class="text-2xl font-bold text-white mb-6 text-center">Modifier un produit</h2>
+
+                <form id="editProductForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Colonne de gauche : Champs de saisie -->
+                        <div class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-400 mb-2">Nom du produit</label>
+                                <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                            </div>
+
+                            <div>
+                                <label for="description" class="block text-sm font-medium text-gray-400 mb-2">Description</label>
+                                <textarea id="description" name="description" rows="4" required class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus"></textarea>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="price" class="block text-sm font-medium text-gray-400 mb-2">Prix (FCFA)</label>
+                                    <input type="number" id="price" name="price" step="1000" min="0" required class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                                </div>
+
+                                <div>
+                                    <label for="original_price" class="block text-sm font-medium text-gray-400 mb-2">Prix original (FCFA)</label>
+                                    <input type="number" id="original_price" name="original_price" step="1000" min="0" class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="category" class="block text-sm font-medium text-gray-400 mb-2">Catégorie</label>
+                                    <select id="category" name="category" required class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                                        <option value="">Sélectionnez une catégorie</option>
+                                        <option value="Sacs à main">Sacs à main</option>
+                                        <option value="Sacs à dos">Sacs à dos</option>
+                                        <option value="Pochettes">Pochettes</option>
+                                        <option value="Valises">Valises</option>
+                                        <option value="Accessoires">Accessoires</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label for="badge" class="block text-sm font-medium text-gray-400 mb-2">Badge</label>
+                                    <select id="badge" name="badge" class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                                        <option value="">Aucun badge</option>
+                                        <option value="Nouveau">Nouveau</option>
+                                        <option value="Promotion">Promotion</option>
+                                        <option value="Meilleure vente">Meilleure vente</option>
+                                        <option value="Édition limitée">Édition limitée</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="stock" class="block text-sm font-medium text-gray-400 mb-2">Stock</label>
+                                <input type="number" id="stock" name="stock" min="0" required class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                            </div>
+                        </div>
+
+                        <!-- Colonne de droite : Upload d'images et vidéos -->
+                        <div class="space-y-6">
+                            <div class="mb-6">
+                                <label class="block text-gray-300 text-sm font-bold mb-2" for="image_path">
+                                    Image du produit
+                                </label>
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex-1">
+                                        <label for="image_path" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-600 border-dashed rounded-lg cursor-pointer bg-gray-700 hover:bg-gray-600 transition duration-300">
+                                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                <i class="fas fa-cloud-upload-alt text-2xl text-gray-400 mb-2"></i>
+                                                <p class="text-xs text-gray-400">PNG, JPG ou JPEG</p>
+                                            </div>
+                                            <input id="image_path" type="file" class="hidden" accept="image/*" />
+                                        </label>
+                                    </div>
+                                    <div id="imagePreview" class="hidden">
+                                        <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-indigo-500">
+                                            <img id="previewImage" class="w-full h-full object-cover" alt="Aperçu de l'image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-6">
+                                <label class="block text-gray-300 text-sm font-bold mb-2" for="video_path">
+                                    Vidéo du produit
+                                </label>
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex-1">
+                                        <label for="video_path" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-600 border-dashed rounded-lg cursor-pointer bg-gray-700 hover:bg-gray-600 transition duration-300">
+                                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                <i class="fas fa-video text-2xl text-gray-400 mb-2"></i>
+                                                <p class="text-xs text-gray-400">MP4, MOV ou AVI</p>
+                                            </div>
+                                            <input id="video_path" type="file" class="hidden" accept="video/*" />
+                                        </label>
+                                    </div>
+                                    <div id="videoPreview" class="hidden">
+                                        <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-indigo-500 relative">
+                                            <video id="previewVideo" class="w-full h-full object-cover">
+                                                Votre navigateur ne supporte pas la lecture de vidéos.
+                                            </video>
+                                            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                                                <i class="fas fa-play text-white text-2xl"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex space-x-4 mt-8">
+                        <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium transition duration-300 transform hover:scale-105">
+                            Mettre à jour le produit
+                        </button>
+                        <a href="/products.html" class="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-medium text-center transition duration-300 transform hover:scale-105">
+                            Annuler
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">À propos</h3>
+                    <p class="text-gray-400">LuxBags - Votre destination pour des sacs de luxe authentiques et élégants.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Liens rapides</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-400 hover:text-white transition duration-300">Accueil</a></li>
+                        <li><a href="/products.html" class="text-gray-400 hover:text-white transition duration-300">Produits</a></li>
+                        <li><a href="/users.html" class="text-gray-400 hover:text-white transition duration-300">Utilisateurs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Suivez-nous</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-pinterest-p"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 LuxBags. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Récupérer l'ID du produit depuis l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+
+        // Fonction pour charger les données du produit
+        async function loadProductData() {
+            try {
+                const response = await fetch(`/products/${productId}`);
+                if (!response.ok) {
+                    throw new Error('Produit non trouvé');
+                }
+                const product = await response.json();
+
+                // Remplir le formulaire avec les données du produit
+                document.getElementById('name').value = product.name;
+                document.getElementById('description').value = product.description;
+                document.getElementById('price').value = product.price;
+                document.getElementById('original_price').value = product.original_price || '';
+                document.getElementById('category').value = product.category;
+                document.getElementById('badge').value = product.badge || '';
+                document.getElementById('stock').value = product.stock;
+
+                // Afficher l'image existante si disponible
+                if (product.image_path) {
+                    const imagePreview = document.getElementById('previewImage');
+                    imagePreview.src = product.image_path;
+                    document.getElementById('imagePreview').classList.remove('hidden');
+                }
+
+                // Afficher la vidéo existante si disponible
+                if (product.video_path) {
+                    const videoPreview = document.getElementById('previewVideo');
+                    videoPreview.src = product.video_path;
+                    document.getElementById('videoPreview').classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors du chargement du produit');
+                window.location.href = '/products.html';
+            }
+        }
+
+        // Charger les données du produit au chargement de la page
+        if (productId) {
+            loadProductData();
+        } else {
+            window.location.href = '/products.html';
+        }
+
+        // Gestionnaire de soumission du formulaire
+        document.getElementById('editProductForm').addEventListener('submit', async(e) => {
+            e.preventDefault();
+
+            try {
+                const formData = new FormData();
+
+                // Validation des prix et du stock
+                const price = parseFloat(document.getElementById('price').value);
+                const originalPrice = document.getElementById('original_price').value ? parseFloat(document.getElementById('original_price').value) : null;
+                const stock = parseInt(document.getElementById('stock').value);
+
+                if (price < 0) {
+                    throw new Error('Le prix ne peut pas être négatif');
+                }
+
+                if (originalPrice !== null && originalPrice < 0) {
+                    throw new Error('Le prix original ne peut pas être négatif');
+                }
+
+                if (stock < 0) {
+                    throw new Error('Le stock ne peut pas être négatif');
+                }
+
+                formData.append('name', document.getElementById('name').value);
+                formData.append('description', document.getElementById('description').value);
+                formData.append('price', price);
+                formData.append('original_price', originalPrice || '');
+                formData.append('category', document.getElementById('category').value);
+                formData.append('badge', document.getElementById('badge').value);
+                formData.append('stock', stock);
+
+                const imageFile = document.getElementById('image_path').files[0];
+                if (imageFile) {
+                    if (imageFile.size > 5 * 1024 * 1024) {
+                        throw new Error('La taille du fichier ne doit pas dépasser 5MB');
+                    }
+
+                    if (!imageFile.type.startsWith('image/')) {
+                        throw new Error('Format de fichier non supporté. Utilisez une image (JPG, PNG, GIF).');
+                    }
+
+                    formData.append('image_path', imageFile);
+                }
+
+                const videoFile = document.getElementById('video_path').files[0];
+                if (videoFile) {
+                    if (videoFile.size > 100 * 1024 * 1024) {
+                        throw new Error('La taille du fichier ne doit pas dépasser 100MB');
+                    }
+
+                    if (!videoFile.type.startsWith('video/')) {
+                        throw new Error('Format de fichier non supporté. Utilisez une vidéo (MP4, MOV, AVI).');
+                    }
+
+                    formData.append('video_path', videoFile);
+                }
+
+                const response = await fetch(`/products/${productId}`, {
+                    method: 'PUT',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Erreur lors de la mise à jour du produit');
+                }
+
+                const data = await response.json();
+                if (data.success) {
+                    alert('Produit mis à jour avec succès.');
+                    window.location.href = '/products.html';
+                } else {
+                    throw new Error(data.error || 'Erreur lors de la mise à jour du produit');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert(error.message || 'Une erreur est survenue lors de la mise à jour du produit.');
+            }
+        });
+
+        // Gestionnaires d'événements pour les prévisualisations
+        document.getElementById('image_path').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('previewImage');
+                    preview.src = e.target.result;
+                    document.getElementById('imagePreview').classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('video_path').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const videoPreview = document.getElementById('previewVideo');
+                videoPreview.src = URL.createObjectURL(file);
+                document.getElementById('videoPreview').classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+
+</html>
