@@ -2,8 +2,12 @@ import express from 'express';
 import { getDB } from '../db.js';
 import bcrypt from 'bcrypt';
 import { uploadProfileImage } from '../utils/upload.js';
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
+
+// Clé secrète pour JWT
+const JWT_SECRET = process.env.JWT_SECRET || 'votre_cle_secrete_jwt';
 
 // Route POST pour insérer un utilisateur dans la base de données
 router.post("/", async(req, res) => {
@@ -244,10 +248,16 @@ router.post('/login', async(req, res) => {
         // Suppression du mot de passe de la réponse
         const { password: _, ...userWithoutPassword } = user;
 
+        // Génération du token JWT
+        const token = jwt.sign({ id: user.id, email: user.email, is_admin: user.is_admin },
+            JWT_SECRET, { expiresIn: '24h' }
+        );
+
         // Connexion réussie
         res.status(200).json({
             message: "Connexion réussie",
-            user: userWithoutPassword
+            user: userWithoutPassword,
+            token
         });
     } catch (err) {
         console.error("Erreur lors de la connexion :", err.message);
@@ -285,6 +295,82 @@ router.put("/:id/profile-image", uploadProfileImage.single('profile_image'), asy
     } catch (err) {
         console.error("Erreur lors de la mise à jour de l'image de profil :", err.message);
         res.status(500).json({ error: "Erreur lors de la mise à jour de l'image de profil." });
+    }
+});
+
+// Route pour changer le mot de passe
+router.put("/:id/password", async(req, res) => {
+    const { id } = req.params;
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+        return res.status(400).json({ error: "Le mot de passe actuel et le nouveau mot de passe sont requis." });
+    }
+
+    try {
+        const db = getDB();
+
+        // Récupération de l'utilisateur
+        const user = await db.get("SELECT * FROM users WHERE id = ?", [id]);
+        if (!user) {
+            return res.status(404).json({ error: "Utilisateur non trouvé." });
+        }
+
+        // Vérification du mot de passe actuel
+        const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+        if (!isPasswordValid) {
+            return res.status(401).json({ error: "Mot de passe actuel incorrect." });
+        }
+
+        // Hachage du nouveau mot de passe
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        // Mise à jour du mot de passe
+        const result = await db.run(
+            "UPDATE users SET password = ? WHERE id = ?", [hashedPassword, id]
+        );
+
+        if (result.changes === 0) {
+            return res.status(404).json({ error: "Utilisateur non trouvé." });
+        }
+
+        res.status(200).json({ message: "Mot de passe modifié avec succès." });
+    } catch (err) {
+        console.error("Erreur lors du changement de mot de passe :", err.message);
+        res.status(500).json({ error: "Erreur lors du changement de mot de passe." });
+    }
+});
+
+// Route pour récupérer le profil de l'utilisateur connecté
+router.get("/profile", async(req, res) => {
+    try {
+        // Vérification du token
+        const authHeader = req.headers.authorization;
+        const token = authHeader ? authHeader.split(' ')[1] : null;
+        if (!token) {
+            return res.status(401).json({ error: "Token d'authentification manquant." });
+        }
+
+        // Vérification et décodage du token
+        const decoded = jwt.verify(token, JWT_SECRET);
+        const userId = decoded.id;
+
+        const db = getDB();
+        const user = await db.get("SELECT * FROM users WHERE id = ?", [userId]);
+
+        if (!user) {
+            return res.status(404).json({ error: "Utilisateur non trouvé." });
+        }
+
+        // Suppression du mot de passe de la réponse
+        const { password, ...userWithoutPassword } = user;
+        res.status(200).json(userWithoutPassword);
+    } catch (err) {
+        if (err.name === 'JsonWebTokenError') {
+            return res.status(401).json({ error: "Token invalide." });
+        }
+        console.error("Erreur lors de la récupération du profil :", err.message);
+        res.status(500).json({ error: "Erreur lors de la récupération du profil." });
     }
 });
 

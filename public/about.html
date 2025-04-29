@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos - LuxBags</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="bg-gray-900">
+    <!-- Navbar -->
+    <nav class="bg-gray-800 border-b border-gray-700 fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="text-2xl font-bold text-indigo-400">LuxBags</a>
+                </div>
+
+                <!-- Menu Desktop -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="/" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Accueil</a>
+                    <a href="/public/collections.html" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Collections</a>
+                    <a href="/public/nouveautes.html" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Nouveautés</a>
+                    <a href="/public/about.html" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">À propos</a>
+                    <a href="/public/contact.html" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Contact</a>
+                    <a href="/public/profile.html" id="profile-link" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium hidden">
+                        <i class="fas fa-user mr-2"></i>Profil
+                    </a>
+                    <a href="/public/dashboard.html" id="dashboard-link" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium hidden">
+                        <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+                    </a>
+                </div>
+
+                <!-- Icons -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-search text-lg"></i>
+                    </a>
+                    <div id="auth-links" class="flex items-center space-x-4">
+                        <!-- Les liens d'authentification seront ajoutés dynamiquement -->
+                    </div>
+                    <!-- Compteur du panier -->
+                    <div id="cart-counter" class="relative">
+                        <a href="/public/cart.html" class="text-gray-400 hover:text-white">
+                            <i class="fas fa-shopping-cart text-lg"></i>
+                            <span id="cart-count" class="absolute -top-2 -right-2 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Bouton menu mobile -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-400 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Mobile -->
+        <div id="mobile-menu" class="md:hidden hidden bg-gray-800 border-t border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="/" class="block text-gray-300 hover:text-white px-3 py-2 text-base font-medium">Accueil</a>
+                <a href="/public/collections.html" class="block text-gray-300 hover:text-white px-3 py-2 text-base font-medium">Collections</a>
+                <a href="/public/nouveautes.html" class="block text-gray-300 hover:text-white px-3 py-2 text-base font-medium">Nouveautés</a>
+                <a href="/public/about.html" class="block text-gray-300 hover:text-white px-3 py-2 text-base font-medium">À propos</a>
+                <a href="/public/contact.html" class="block text-gray-300 hover:text-white px-3 py-2 text-base font-medium">Contact</a>
+                <a href="/public/profile.html" id="mobile-profile-link" class="block text-gray-300 hover:text-white px-3 py-2 text-base font-medium hidden">
+                    <i class="fas fa-user mr-2"></i>Profil
+                </a>
+                <a href="/public/dashboard.html" id="mobile-dashboard-link" class="block bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 text-base rounded-lg hidden text-sm font-medium transition-colors duration-200">
+                    <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+                </a>
+                <div class="pt-4 pb-3 border-t border-gray-700 flex justify-center space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-search text-lg"></i>
+                    </a>
+                    <div id="mobile-auth-links" class="flex items-center space-x-4">
+                        <!-- Les liens d'authentification seront ajoutés dynamiquement -->
+                    </div>
+                    <a href="/public/cart.html" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="pt-32 pb-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl font-bold text-white text-center mb-4">À Propos de LuxBags</h1>
+            <p class="text-gray-400 text-center mb-12">Notre histoire, notre passion, notre engagement</p>
+        </div>
+    </div>
+
+    <!-- Notre Histoire -->
+    <section class="py-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="flex justify-center">
+                    <img src="/uploads/personnes/mentor_2.png" alt="Atelier LuxBags" class="w-3/4 h-auto object-cover rounded-xl shadow-2xl">
+                </div>
+
+                <div>
+                    <span class="text-indigo-400 font-semibold">NOTRE HISTOIRE</span>
+                    <h2 class="text-4xl font-bold mt-2 mb-6">L'Excellence dans la Maroquinerie</h2>
+                    <p class="text-gray-400 mb-4">Fondée en 2020, LuxBags incarne l'alliance parfaite entre tradition artisanale et design contemporain. Chaque sac est conçu dans notre atelier par des artisans passionnés.</p>
+                    <p class="text-gray-400 mb-6">Nous sélectionnons uniquement les cuirs les plus nobles et travaillons avec des fournisseurs engagés dans une démarche éco-responsable. Nos créations sont conçues pour durer et devenir des pièces intemporelles.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nos Valeurs -->
+    <section class="py-16 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">Nos Valeurs</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-gray-900 p-6 rounded-xl">
+                    <div class="bg-indigo-600 p-3 rounded-lg w-12 h-12 flex items-center justify-center mb-4">
+                        <i class="fas fa-leaf text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Durabilité</h3>
+                    <p class="text-gray-400">Nous nous engageons à créer des sacs qui durent dans le temps, tant en qualité qu'en style.</p>
+                </div>
+
+                <div class="bg-gray-900 p-6 rounded-xl">
+                    <div class="bg-indigo-600 p-3 rounded-lg w-12 h-12 flex items-center justify-center mb-4">
+                        <i class="fas fa-medal text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Excellence</h3>
+                    <p class="text-gray-400">Chaque détail est soigné pour garantir une qualité irréprochable.</p>
+                </div>
+
+                <div class="bg-gray-900 p-6 rounded-xl">
+                    <div class="bg-indigo-600 p-3 rounded-lg w-12 h-12 flex items-center justify-center mb-4">
+                        <i class="fas fa-gem text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Luxe</h3>
+                    <p class="text-gray-400">Nous créons des pièces d'exception qui subliment votre style.</p>
+                </div>
+
+                <div class="bg-gray-900 p-6 rounded-xl">
+                    <div class="bg-indigo-600 p-3 rounded-lg w-12 h-12 flex items-center justify-center mb-4">
+                        <i class="fas fa-heart text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Passion</h3>
+                    <p class="text-gray-400">Notre amour pour le design et l'artisanat se reflète dans chaque détail de nos créations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Notre Équipe -->
+    <section class="py-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">Notre Équipe</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-800 rounded-xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                    <div class="relative h-80">
+                        <img src="/uploads/personnes/photo1.png" alt="Directrice Créative" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Dak-SHADOW</h3>
+                        <p class="text-indigo-400 mb-2">Fondateur & Directeur Créatif</p>
+                        <p class="text-gray-400">Passionné par le design et l'artisanat, il apporte sa vision unique à chaque collection.</p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800 rounded-xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                    <div class="relative h-80">
+                        <img src="/uploads/personnes/djibril-removebg-preview.png" alt="Directeur de Production" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Djibril Pondikpa</h3>
+                        <p class="text-indigo-400 mb-2">Directeur de Production</p>
+                        <p class="text-gray-400">Expert en cuir et en techniques artisanales, il supervise chaque étape de la production.</p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800 rounded-xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                    <div class="relative h-80">
+                        <img src="/uploads/personnes/mentor_1.png" alt="Responsable Design" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Koffi Koffi</h3>
+                        <p class="text-indigo-400 mb-2">Responsable Design</p>
+                        <p class="text-gray-400">Avec son œil pour les détails, il crée des designs qui allient fonctionnalité et élégance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-6">LuxBags</h3>
+                    <p class="text-gray-400 mb-4">L'excellence dans la qualité et la durabilité. Des sacs conçus pour ceux qui recherchent l'élégance intemporelle.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-pinterest-p"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-6">Boutiques</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Atakpamé - non loin du Lycée d'Agbonou</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Sokode - Bar relais et deriere URCLEC</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Kara - à côté de All School</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-6">Service Client</h4>
+                    <ul class="space-y-3">
+                        <li><a href="/public/contact.html" class="text-gray-400 hover:text-white">Contactez-nous</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Livraison & Retours</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Guide des tailles</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-6">Informations</h4>
+                    <ul class="space-y-3">
+                        <li><a href="/public/about.html" class="text-gray-400 hover:text-white">À propos</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Carrières</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Développement durable</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Presse</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Conditions générales</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2025 LuxBags. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Gestion du menu mobile
+        document.getElementById('mobile-menu-button').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Gestion de l'authentification
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user'));
+            const authLinks = document.getElementById('auth-links');
+            const mobileAuthLinks = document.getElementById('mobile-auth-links');
+            const profileLink = document.getElementById('profile-link');
+            const dashboardLink = document.getElementById('dashboard-link');
+            const mobileProfileLink = document.getElementById('mobile-profile-link');
+            const mobileDashboardLink = document.getElementById('mobile-dashboard-link');
+
+            if (token && user) {
+                // Utilisateur connecté
+                authLinks.innerHTML = `
+                    <button id="logoutButton" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-sign-out-alt text-lg"></i>
+                    </button>
+                `;
+
+                mobileAuthLinks.innerHTML = `
+                    <button id="mobileLogoutButton" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-sign-out-alt text-lg"></i>
+                    </button>
+                `;
+
+                // Afficher les liens profil et dashboard
+                profileLink.classList.remove('hidden');
+                mobileProfileLink.classList.remove('hidden');
+
+                // Afficher le lien dashboard si l'utilisateur est admin
+                if (user.is_admin) {
+                    dashboardLink.classList.remove('hidden');
+                    mobileDashboardLink.classList.remove('hidden');
+                }
+
+                // Gestion de la déconnexion
+                document.getElementById('logoutButton').addEventListener('click', () => {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    window.location.reload();
+                });
+
+                document.getElementById('mobileLogoutButton').addEventListener('click', () => {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    window.location.reload();
+                });
+            } else {
+                // Utilisateur non connecté
+                authLinks.innerHTML = `
+                    <a href="/public/login.html" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-sign-in-alt text-lg"></i>
+                    </a>
+                `;
+
+                mobileAuthLinks.innerHTML = `
+                    <a href="/public/login.html" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-sign-in-alt text-lg"></i>
+                    </a>
+                `;
+
+                // Cacher les liens profil et dashboard
+                profileLink.classList.add('hidden');
+                dashboardLink.classList.add('hidden');
+                mobileProfileLink.classList.add('hidden');
+                mobileDashboardLink.classList.add('hidden');
+            }
+
+            // Mettre à jour le compteur du panier
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = document.getElementById('cart-count');
+            cartCount.textContent = cart.length;
+        });
+    </script>
+</body>
+
+</html>

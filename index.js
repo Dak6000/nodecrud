@@ -3,6 +3,7 @@ import { getDB, initDB } from './db.js';
 import bodyParser from 'body-parser';
 import userRouter from './routes/users.js';
 import productRouter from './routes/products.js';
+import statsRouter from './routes/stats.js';
 import { uploadProductImage } from './utils/upload.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -51,10 +52,18 @@ app.get('/login.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
+app.get('/dashboard.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+});
+
+app.get("/accueil.html", (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'accueil.html'));
+});
+
 // Initialisation de la base de données
 initDB();
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Route GET pour vérifier que le serveur fonctionne
 app.get("/", (req, res) => {
@@ -64,6 +73,7 @@ app.get("/", (req, res) => {
 // Utilisation des routeurs
 app.use('/users', userRouter);
 app.use('/products', productRouter);
+app.use('/api/stats', statsRouter);
 
 // Démarrage du serveur sur le port spécifié
 app.listen(PORT, () => {

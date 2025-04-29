@@ -58,21 +58,6 @@
 </head>
 
 <body class="bg-gray-900 min-h-screen">
-    <!-- Header -->
-    <header class="bg-gray-800 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <a href="/public/index.html" class="text-2xl font-bold text-indigo-400">LuxBags</a>
-                <nav>
-                    <ul class="flex space-x-6">
-                        <li><a href="/public/index.html" class="hover:text-indigo-400 transition duration-300">Accueil</a></li>
-                        <li><a href="/public/collections.html" class="hover:text-indigo-400 transition duration-300">Collections</a></li>
-                        <li><a href="/public/contact.html" class="hover:text-indigo-400 transition duration-300">Contact</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -145,7 +130,7 @@
                         <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium transition duration-300 transform hover:scale-105">
                             Mettre à jour
                         </button>
-                        <a href="/public/users.html" class="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-medium text-center transition duration-300 transform hover:scale-105">
+                        <a href="/public/profile.html" class="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-medium text-center transition duration-300 transform hover:scale-105">
                             Annuler
                         </a>
                     </div>
@@ -153,43 +138,6 @@
             </div>
         </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">À propos</h3>
-                    <p class="text-gray-400">LuxBags - Votre destination pour des sacs de luxe authentiques et élégants.</p>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Liens rapides</h3>
-                    <ul class="space-y-2">
-                        <li><a href="/public/index.html" class="text-gray-400 hover:text-white transition duration-300">Accueil</a></li>
-                        <li><a href="/public/collections.html" class="text-gray-400 hover:text-white transition duration-300">Collections</a></li>
-                        <li><a href="/public/contact.html" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Suivez-nous</h3>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-                            <i class="fab fa-pinterest-p"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2024 LuxBags. Tous droits réservés.</p>
-            </div>
-        </div>
-    </footer>
 
     <script>
         // Récupération de l'ID de l'utilisateur depuis l'URL
@@ -288,7 +236,7 @@
                     }
 
                     alert('Utilisateur mis à jour avec succès.');
-                    window.location.href = '/public/users.html';
+                    window.location.href = '/public/profile.html';
                 } else {
                     throw new Error(data.error || 'Erreur lors de la mise à jour de l\'utilisateur');
                 }

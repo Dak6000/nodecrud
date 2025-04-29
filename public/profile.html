@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - LuxBags</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .bg-gradient {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
+        }
+        
+        .input-focus:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+        
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #6366f1;
+        }
+        
+        .profile-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
+            border: 1px solid #374151;
+            transition: transform 0.3s ease;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 min-h-screen">
+    <!-- Header -->
+    <nav class="bg-gray-800 border-b border-gray-700 fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="text-2xl font-bold text-indigo-400">LuxBags</a>
+                </div>
+
+                <!-- Menu Desktop -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="/" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Accueil</a>
+                    <a href="/public/collections.html" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Collections</a>
+                    <a href="/public/nouveautes.html" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Nouveautés</a>
+                    <a href="/public/about.html" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">À propos</a>
+                    <a href="/public/contact.html" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Contact</a>
+                    <a href="/public/profile.html" id="profile-link" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium hidden">
+                        <i class="fas fa-user mr-2"></i>Profil
+                    </a>
+                    <a href="/public/dashboard.html" id="dashboard-link" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium hidden">
+                        <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+                    </a>
+                </div>
+
+                <!-- Icons -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-search text-lg"></i>
+                    </a>
+                    <div id="auth-links" class="flex items-center space-x-4">
+                        <!-- Les liens d'authentification seront ajoutés dynamiquement -->
+                    </div>
+                    <!-- Compteur du panier -->
+                    <div id="cart-counter" class="relative">
+                        <a href="/public/cart.html" class="text-gray-400 hover:text-white">
+                            <i class="fas fa-shopping-cart text-lg"></i>
+                            <span id="cart-count" class="absolute -top-2 -right-2 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Bouton menu mobile -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-400 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Mobile -->
+        <div id="mobile-menu" class="md:hidden hidden bg-gray-800 border-t border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="/" class="block text-gray-300 hover:text-white px-3 py-2 text-base font-medium">Accueil</a>
+                <a href="/public/collections.html" class="block text-gray-300 hover:text-white px-3 py-2 text-base font-medium">Collections</a>
+                <a href="/public/nouveautes.html" class="block text-gray-300 hover:text-white px-3 py-2 text-base font-medium">Nouveautés</a>
+                <a href="/public/about.html" class="block text-gray-300 hover:text-white px-3 py-2 text-base font-medium">À propos</a>
+                <a href="/public/contact.html" class="block text-gray-300 hover:text-white px-3 py-2 text-base font-medium">Contact</a>
+                <a href="/public/profile.html" id="mobile-profile-link" class="block text-gray-300 hover:text-white px-3 py-2 text-base font-medium hidden">
+                    <i class="fas fa-user mr-2"></i>Profil
+                </a>
+                <a href="/public/dashboard.html" id="mobile-dashboard-link" class="block bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 text-base rounded-lg hidden text-sm font-medium transition-colors duration-200">
+                    <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+                </a>
+                <div class="pt-4 pb-3 border-t border-gray-700 flex justify-center space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-search text-lg"></i>
+                    </a>
+                    <div id="mobile-auth-links" class="flex items-center space-x-4">
+                        <!-- Les liens d'authentification seront ajoutés dynamiquement -->
+                    </div>
+                    <a href="/public/cart.html" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-32">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Carte de profil -->
+            <div class="profile-card rounded-xl p-6 text-white">
+                <div class="flex flex-col items-center">
+                    <img id="profile-image" src="https://via.placeholder.com/150" alt="Photo de profil" class="profile-image mb-4">
+                    <h2 id="user-name" class="text-xl font-bold mb-2">Chargement...</h2>
+                    <p id="user-email" class="text-gray-400">Chargement...</p>
+                </div>
+                <div class="mt-6 space-y-4">
+                    <button id="edit-profile-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center justify-center">
+                        <i class="fas fa-edit mr-2"></i>
+                        Modifier le profil
+                    </button>
+                    <button id="change-password-btn" class="w-full bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center justify-center">
+                        <i class="fas fa-key mr-2"></i>
+                        Changer le mot de passe
+                    </button>
+                </div>
+            </div>
+
+            <!-- Informations détaillées -->
+            <div class="md:col-span-2 space-y-6">
+                <!-- Informations personnelles -->
+                <div class="profile-card rounded-xl p-6 text-white">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                        <i class="fas fa-user mr-2 text-indigo-400"></i> Informations personnelles
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400">Prénom</label>
+                            <p id="user-firstname" class="mt-1 text-white">Chargement...</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400">Nom</label>
+                            <p id="user-lastname" class="mt-1 text-white">Chargement...</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400">Email</label>
+                            <p id="user-email-detail" class="mt-1 text-white">Chargement...</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400">Téléphone</label>
+                            <p id="user-phone" class="mt-1 text-white">Chargement...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Adresse -->
+                <div class="profile-card rounded-xl p-6 text-white">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2 text-indigo-400"></i> Adresse
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400">Adresse</label>
+                            <p id="user-address" class="mt-1 text-white">Chargement...</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400">Ville</label>
+                            <p id="user-city" class="mt-1 text-white">Chargement...</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400">Pays</label>
+                            <p id="user-country" class="mt-1 text-white">Chargement...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-6">LuxBags</h3>
+                    <p class="text-gray-400 mb-4">L'excellence dans la qualité et la durabilité. Des sacs conçus pour ceux qui recherchent l'élégance intemporelle.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-pinterest-p"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-6">Boutiques</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Atakpamé - non loin du Lycée d'Agbonou</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Sokode - Bar relais et deriere URCLEC</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Kara - à côté de All School</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-6">Service Client</h4>
+                    <ul class="space-y-3">
+                        <li><a href="/public/contact.html" class="text-gray-400 hover:text-white">Contactez-nous</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Livraison & Retours</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Guide des tailles</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-6">Informations</h4>
+                    <ul class="space-y-3">
+                        <li><a href="/public/about.html" class="text-gray-400 hover:text-white">À propos</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Carrières</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Développement durable</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Presse</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Conditions générales</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2025 LuxBags. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Vérifier si l'utilisateur est connecté
+        const user = JSON.parse(localStorage.getItem('user'));
+        const token = localStorage.getItem('token');
+
+        if (!user || !token) {
+            console.log('Utilisateur non connecté, redirection vers la page de connexion');
+            window.location.href = '/public/login.html';
+        }
+
+        // Gestion du menu mobile
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Gestion des liens d'authentification
+        function updateAuthLinks() {
+            const authLinks = document.getElementById('auth-links');
+            const mobileAuthLinks = document.getElementById('mobile-auth-links');
+            const profileLink = document.getElementById('profile-link');
+            const mobileProfileLink = document.getElementById('mobile-profile-link');
+            const dashboardLink = document.getElementById('dashboard-link');
+            const mobileDashboardLink = document.getElementById('mobile-dashboard-link');
+
+            if (user) {
+                // Utilisateur connecté
+                authLinks.innerHTML = `
+                    <button onclick="logout()" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Déconnexion
+                    </button>
+                `;
+                mobileAuthLinks.innerHTML = `
+                    <button onclick="logout()" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Déconnexion
+                    </button>
+                `;
+                profileLink.classList.remove('hidden');
+                mobileProfileLink.classList.remove('hidden');
+                if (user.is_admin) {
+                    dashboardLink.classList.remove('hidden');
+                    mobileDashboardLink.classList.remove('hidden');
+                }
+            } else {
+                // Utilisateur non connecté
+                authLinks.innerHTML = `
+                    <a href="/public/login.html" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Connexion
+                    </a>
+                    <a href="/public/register.html" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-user-plus mr-2"></i>Inscription
+                    </a>
+                `;
+                mobileAuthLinks.innerHTML = `
+                    <a href="/public/login.html" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Connexion
+                    </a>
+                    <a href="/public/register.html" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-user-plus mr-2"></i>Inscription
+                    </a>
+                `;
+            }
+        }
+
+        // Fonction de déconnexion
+        function logout() {
+            localStorage.removeItem('user');
+            localStorage.removeItem('token');
+            window.location.href = '/public/login.html';
+        }
+
+        // Fonction pour charger le profil utilisateur
+        async function loadUserProfile() {
+            try {
+                console.log('Tentative de chargement du profil...');
+                const response = await fetch(`/users/${user.id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                console.log('Réponse reçue:', response.status);
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('Erreur serveur:', errorData);
+                    throw new Error(errorData.error || 'Erreur lors du chargement du profil');
+                }
+
+                const userData = await response.json();
+                console.log('Données utilisateur reçues:', userData);
+                displayUserProfile(userData);
+            } catch (error) {
+                console.error('Erreur détaillée:', error);
+                document.getElementById('profile-content').innerHTML = `
+                    <div class="text-red-600">
+                        Une erreur est survenue lors du chargement de votre profil: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        // Fonction pour afficher les informations du profil
+        function displayUserProfile(user) {
+            console.log('Affichage des données utilisateur:', user);
+            // Mise à jour de la photo de profil
+            const profileImage = document.getElementById('profile-image');
+            profileImage.src = user.profile_image ? `/uploads/users/${user.profile_image}` : 'https://via.placeholder.com/150';
+
+            // Mise à jour des informations de base
+            document.getElementById('user-name').textContent = `${user.first_name} ${user.last_name}`;
+            document.getElementById('user-email').textContent = user.email;
+
+            // Mise à jour des informations détaillées
+            document.getElementById('user-firstname').textContent = user.first_name || 'Non renseigné';
+            document.getElementById('user-lastname').textContent = user.last_name || 'Non renseigné';
+            document.getElementById('user-email-detail').textContent = user.email;
+            document.getElementById('user-phone').textContent = user.phone || 'Non renseigné';
+            document.getElementById('user-address').textContent = user.address || 'Non renseignée';
+            document.getElementById('user-city').textContent = user.city || 'Non renseignée';
+            document.getElementById('user-country').textContent = user.country || 'Non renseigné';
+        }
+
+        // Fonction pour afficher le formulaire d'édition
+        function showEditForm() {
+            const mainContent = document.querySelector('main');
+            mainContent.innerHTML = `
+                <div class="max-w-2xl mx-auto bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-8">
+                        <h2 class="text-2xl font-bold text-white mb-6 text-center">Modifier mon profil</h2>
+
+                        <form id="editProfileForm" class="space-y-6">
+                            <!-- Photo de profil -->
+                            <div class="flex flex-col items-center space-y-4">
+                                <div class="relative">
+                                    <img id="profileImagePreview" src="${document.getElementById('profile-image').src}" 
+                                         alt="Photo de profil" 
+                                         class="w-32 h-32 rounded-full object-cover border-2 border-indigo-500">
+                                    <input type="file" id="profile_image" name="profile_image" accept="image/*" class="hidden">
+                                    <label for="profile_image" class="absolute bottom-0 right-0 bg-indigo-600 text-white p-2 rounded-full cursor-pointer hover:bg-indigo-700 transition duration-300">
+                                        <i class="fas fa-camera"></i>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Informations personnelles -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="first_name" class="block text-sm font-medium text-gray-400">Prénom</label>
+                                    <input type="text" id="first_name" name="first_name" required
+                                           class="mt-1 block w-full rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                                </div>
+                                <div>
+                                    <label for="last_name" class="block text-sm font-medium text-gray-400">Nom</label>
+                                    <input type="text" id="last_name" name="last_name" required
+                                           class="mt-1 block w-full rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-400">Email</label>
+                                    <input type="email" id="email" name="email" required
+                                           class="mt-1 block w-full rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                                </div>
+                                <div>
+                                    <label for="phone" class="block text-sm font-medium text-gray-400">Téléphone</label>
+                                    <input type="tel" id="phone" name="phone"
+                                           class="mt-1 block w-full rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                                </div>
+                            </div>
+
+                            <!-- Adresse -->
+                            <div class="space-y-6">
+                                <h3 class="text-lg font-semibold text-white">Adresse</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="address" class="block text-sm font-medium text-gray-400">Adresse</label>
+                                        <input type="text" id="address" name="address"
+                                               class="mt-1 block w-full rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                                    </div>
+                                    <div>
+                                        <label for="city" class="block text-sm font-medium text-gray-400">Ville</label>
+                                        <input type="text" id="city" name="city"
+                                               class="mt-1 block w-full rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                                    </div>
+                                    <div>
+                                        <label for="country" class="block text-sm font-medium text-gray-400">Pays</label>
+                                        <input type="text" id="country" name="country"
+                                               class="mt-1 block w-full rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none input-focus">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-end space-x-4">
+                                <button type="button" onclick="cancelEdit()" 
+                                        class="px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition duration-300">
+                                    Annuler
+                                </button>
+                                <button type="submit" 
+                                        class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-300">
+                                    Enregistrer
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+
+            // Remplir le formulaire avec les données actuelles
+            const currentUser = JSON.parse(localStorage.getItem('user'));
+            document.getElementById('first_name').value = currentUser.first_name || '';
+            document.getElementById('last_name').value = currentUser.last_name || '';
+            document.getElementById('email').value = currentUser.email || '';
+            document.getElementById('phone').value = currentUser.phone || '';
+            document.getElementById('address').value = currentUser.address || '';
+            document.getElementById('city').value = currentUser.city || '';
+            document.getElementById('country').value = currentUser.country || '';
+
+            // Gestionnaire pour la prévisualisation de l'image
+            document.getElementById('profile_image').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('profileImagePreview').src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Gestionnaire pour la soumission du formulaire
+            document.getElementById('editProfileForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                await updateProfile();
+            });
+        }
+
+        // Fonction pour annuler l'édition
+        function cancelEdit() {
+            window.location.reload();
+        }
+
+        // Fonction pour mettre à jour le profil
+        async function updateProfile() {
+            try {
+                const formData = new FormData();
+                formData.append('first_name', document.getElementById('first_name').value);
+                formData.append('last_name', document.getElementById('last_name').value);
+                formData.append('email', document.getElementById('email').value);
+                formData.append('phone', document.getElementById('phone').value);
+                formData.append('address', document.getElementById('address').value);
+                formData.append('city', document.getElementById('city').value);
+                formData.append('country', document.getElementById('country').value);
+
+                const profileImage = document.getElementById('profile_image').files[0];
+                if (profileImage) {
+                    formData.append('profile_image', profileImage);
+                }
+
+                const response = await fetch(`/users/${user.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Erreur lors de la mise à jour du profil');
+                }
+
+                const updatedUser = await response.json();
+                localStorage.setItem('user', JSON.stringify(updatedUser));
+                alert('Profil mis à jour avec succès !');
+                window.location.reload();
+            } catch (error) {
+                console.error('Erreur lors de la mise à jour:', error);
+                alert(error.message || 'Une erreur est survenue lors de la mise à jour du profil');
+            }
+        }
+
+        // Mise à jour des liens d'authentification au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            updateAuthLinks();
+            console.log('Page chargée, démarrage du chargement du profil');
+            loadUserProfile();
+        });
+
+        // Gestionnaire pour le bouton de modification
+        document.getElementById('edit-profile-btn').addEventListener('click', () => {
+            window.location.href = `/public/edit-user.html?id=${user.id}`;
+        });
+
+        // Gestionnaire pour le bouton de changement de mot de passe
+        document.getElementById('change-password-btn').addEventListener('click', () => {
+            window.location.href = `/public/change-password.html?id=${user.id}`;
+        });
+    </script>
+</body>
+
+</html>

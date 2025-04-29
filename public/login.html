@@ -27,7 +27,7 @@
                 <a href="/" class="text-2xl font-bold text-indigo-400">LuxBags</a>
                 <nav>
                     <ul class="flex space-x-6">
-                        <li><a href="/public/index.html" class="hover:text-indigo-400 transition duration-300">Accueil</a></li>
+                        <li><a href="/" class="hover:text-indigo-400 transition duration-300">Accueil</a></li>
                         <li><a href="/public/collections.html" class="hover:text-indigo-400 transition duration-300">Collections</a></li>
                         <li><a href="/public/contact.html" class="hover:text-indigo-400 transition duration-300">Contact</a></li>
                     </ul>
@@ -131,10 +131,11 @@
 
                 if (response.ok) {
                     // Stockage des informations de l'utilisateur dans le localStorage
-                    localStorage.setItem('user', JSON.stringify(data));
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    localStorage.setItem('token', data.token);
 
-                    // Redirection vers la page d'affichage des données
-                    window.location.href = '/public/users.html';
+                    // Redirection vers la page d'accueil
+                    window.location.href = '/';
                 } else {
                     // Afficher le message d'erreur
                     alert(data.error || 'Email ou mot de passe incorrect.');

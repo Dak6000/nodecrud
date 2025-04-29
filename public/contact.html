@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - LuxBags</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet CSS pour la carte -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("_b-w8GY4LmKcn7gsi"); // Remplacez par votre clé publique EmailJS
+        })();
+    </script>
+</head>
+
+<body class="bg-gray-900">
+    <!-- Navbar -->
+    <nav class="bg-gray-800 border-b border-gray-700 fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="text-2xl font-bold text-indigo-400">LuxBags</a>
+                </div>
+
+                <!-- Menu Desktop -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="/" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Accueil</a>
+                    <a href="/public/collections.html" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Collections</a>
+                    <a href="/public/nouveautes.html" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Nouveautés</a>
+                    <a href="/public/about.html" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">À propos</a>
+                    <a href="/public/contact.html" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Contact</a>
+                    <a href="/public/profile.html" id="profile-link" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium hidden">Profil</a>
+                    <a href="/public/dashboard.html" id="dashboard-link" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium hidden">
+                        <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+                    </a>
+                </div>
+
+                <!-- Icons -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-search text-lg"></i>
+                    </a>
+                    <div id="auth-links" class="flex items-center space-x-4">
+                        <!-- Les liens d'authentification seront ajoutés dynamiquement -->
+                    </div>
+                    <!-- Compteur du panier -->
+                    <div id="cart-counter" class="relative">
+                        <a href="/public/cart.html" class="text-gray-400 hover:text-white">
+                            <i class="fas fa-shopping-cart text-lg"></i>
+                            <span id="cart-count" class="absolute -top-2 -right-2 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Bouton menu mobile -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-400 hover:text-white focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Mobile -->
+        <div id="mobile-menu" class="md:hidden hidden bg-gray-800 border-t border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="/" class="block text-gray-300 hover:text-white px-3 py-2 text-base font-medium">Accueil</a>
+                <a href="/public/collections.html" class="block text-gray-300 hover:text-white px-3 py-2 text-base font-medium">Collections</a>
+                <a href="/public/nouveautes.html" class="block text-gray-300 hover:text-white px-3 py-2 text-base font-medium">Nouveautés</a>
+                <a href="/public/about.html" class="block text-gray-300 hover:text-white px-3 py-2 text-base font-medium">À propos</a>
+                <a href="/public/contact.html" class="block text-gray-300 hover:text-white px-3 py-2 text-base font-medium">Contact</a>
+                <a href="/public/profile.html" id="mobile-profile-link" class="block text-gray-300 hover:text-white px-3 py-2 text-base font-medium hidden">Profil</a>
+                <a href="/public/dashboard.html" id="mobile-dashboard-link" class="block bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 text-base rounded-lg hidden text-sm font-medium transition-colors duration-200">
+                    <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+                </a>
+                <div class="pt-4 pb-3 border-t border-gray-700 flex justify-center space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-search text-lg"></i>
+                    </a>
+                    <div id="mobile-auth-links" class="flex items-center space-x-4">
+                        <!-- Les liens d'authentification seront ajoutés dynamiquement -->
+                    </div>
+                    <a href="/public/cart.html" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="pt-32 pb-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-white text-center mb-4">Contactez-nous</h1>
+            <p class="text-gray-400 text-center max-w-2xl mx-auto">Notre équipe est à votre disposition pour répondre à toutes vos questions et vous accompagner dans vos achats.</p>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="py-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Information -->
+                <div class="bg-gray-800 rounded-xl p-8">
+                    <h2 class="text-2xl font-bold text-white mb-6">Informations de contact</h2>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="bg-indigo-600 p-3 rounded-lg mr-4">
+                                <i class="fas fa-map-marker-alt text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-white mb-1">Adresse</h3>
+                                <p class="text-gray-400">Atakpamé, à quelque mettre du Lycée d'Agbonou<br>Kara, kawiele juste à côté de All School</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-indigo-600 p-3 rounded-lg mr-4">
+                                <i class="fas fa-phone text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-white mb-1">Téléphone</h3>
+                                <p class="text-gray-400">+228 93 59 00 67 +228 93 59 00 73 / +228 91 62 59 24</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-indigo-600 p-3 rounded-lg mr-4">
+                                <i class="fas fa-envelope text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-white mb-1">Email</h3>
+                                <p class="text-gray-400">luxbagsavandre@gmail.com</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-indigo-600 p-3 rounded-lg mr-4">
+                                <i class="fas fa-clock text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-white mb-1">Horaires d'ouverture</h3>
+                                <p class="text-gray-400">Lundi - Vendredi: 8h - 20h<br>Samedi: 9h - 21h<br>Dimanche: Fermé</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <h3 class="text-lg font-semibold text-white mb-4">Suivez-nous</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                                <i class="fab fa-facebook-f text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                                <i class="fab fa-instagram text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                                <i class="fab fa-pinterest-p text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                                <i class="fab fa-youtube text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-gray-800 rounded-xl p-8">
+                    <h2 class="text-2xl font-bold text-white mb-6">Envoyez-nous un message</h2>
+
+                    <form id="contact-form" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="firstname" class="block text-sm font-medium text-gray-400 mb-2">Prénom *</label>
+                                <input type="text" id="firstname" name="firstname" class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none" required>
+                            </div>
+                            <div>
+                                <label for="lastname" class="block text-sm font-medium text-gray-400 mb-2">Nom *</label>
+                                <input type="text" id="lastname" name="lastname" class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none" required>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-400 mb-2">Email *</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none" required>
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-400 mb-2">Téléphone *</label>
+                                <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none" required>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-400 mb-2">Sujet *</label>
+                            <input type="text" id="subject" name="subject" class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none" required>
+                        </div>
+
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-400 mb-2">Message *</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:border-indigo-500 focus:outline-none" required></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium transition duration-300">
+                            Envoyer le message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Section -->
+    <div class="py-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold text-white text-center mb-8">Notre boutique</h2>
+            <div id="map" class="h-96 rounded-xl overflow-hidden"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+    <script src="js/footer.js"></script>
+    <!-- Leaflet JS pour la carte -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/contact.js"></script>
+    <script>
+        // Gestion du menu mobile
+        document.getElementById('mobile-menu-button').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Gestion de l'authentification
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user'));
+            const authLinks = document.getElementById('auth-links');
+            const mobileAuthLinks = document.getElementById('mobile-auth-links');
+            const profileLink = document.getElementById('profile-link');
+            const dashboardLink = document.getElementById('dashboard-link');
+            const mobileProfileLink = document.getElementById('mobile-profile-link');
+            const mobileDashboardLink = document.getElementById('mobile-dashboard-link');
+
+            if (token && user) {
+                // Utilisateur connecté
+                authLinks.innerHTML = `
+                    <button id="logoutButton" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-sign-out-alt text-lg"></i>
+                    </button>
+                `;
+
+                mobileAuthLinks.innerHTML = `
+                    <button id="mobileLogoutButton" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-sign-out-alt text-lg"></i>
+                    </button>
+                `;
+
+                // Afficher les liens profil et dashboard
+                profileLink.classList.remove('hidden');
+                profileLink.innerHTML = `<i class="fas fa-user mr-2"></i>Profil`;
+                mobileProfileLink.classList.remove('hidden');
+                mobileProfileLink.innerHTML = `<i class="fas fa-user mr-2"></i>Profil`;
+
+                // Afficher le lien dashboard si l'utilisateur est admin
+                if (user.is_admin) {
+                    dashboardLink.classList.remove('hidden');
+                    mobileDashboardLink.classList.remove('hidden');
+                }
+
+                // Gestion de la déconnexion
+                document.getElementById('logoutButton').addEventListener('click', () => {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    window.location.reload();
+                });
+
+                document.getElementById('mobileLogoutButton').addEventListener('click', () => {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    window.location.reload();
+                });
+            } else {
+                // Utilisateur non connecté
+                authLinks.innerHTML = `
+                    <a href="/public/login.html" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-sign-in-alt text-lg"></i>
+                    </a>
+                `;
+
+                mobileAuthLinks.innerHTML = `
+                    <a href="/public/login.html" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-sign-in-alt text-lg"></i>
+                    </a>
+                `;
+
+                // Cacher les liens profil et dashboard
+                profileLink.classList.add('hidden');
+                dashboardLink.classList.add('hidden');
+                mobileProfileLink.classList.add('hidden');
+                mobileDashboardLink.classList.add('hidden');
+            }
+
+            // Mettre à jour le compteur du panier
+            updateCartCount();
+        });
+
+        // Fonction pour mettre à jour le compteur du panier
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = document.getElementById('cart-count');
+            cartCount.textContent = cart.length;
+        }
+    </script>
+</body>
+
+</html>
