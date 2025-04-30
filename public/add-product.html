@@ -295,7 +295,7 @@
                 const data = await response.json();
                 if (data.success) {
                     alert('Produit ajouté avec succès.');
-                    window.location.href = '/products.html';
+                    window.location.href = '/dashboard.html';
                 } else {
                     throw new Error(data.error || 'Erreur lors de l\'ajout du produit');
                 }
